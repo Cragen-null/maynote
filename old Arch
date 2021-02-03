@@ -1,0 +1,81 @@
+# loadkeys jp106
+# ping -c 3 www.google.com
+cfdisk /dev/sda
+Root:
+– Enter Primary – "15360" – Enter Beginning – Enter Bootable
+Home:
+– Enter Primamary – Enter – Enter – Enter 
+# mkfs.ext4 /dev/sda1
+# mkfs.ext4 /dev/sda2
+# mount /dev/sda1 /mnt
+# mkdir /mnt/home
+# mount /dev/sda2 /mnt/home
+# nano /etc/pacman.d/mirrorlist
+# pacman -Syy
+# pacstrap /mnt base base-devel 
+# genfstab -U -p /mnt >> /mnt/etc/fstab
+# nano /mnt/etc/fstab
+# arch-chroot /mnt
+# nano /etc/locale.gen
+en_US.UTF-8 UTF-8
+ja_JP.UTF-8 UTF-8
+# locale-gen
+# loadkeys jp106
+# nano /etc/vconsole.conf
+KEYMAP=jp106
+# ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+# hwclock --systohc --utc
+# echo myhostname > /etc/hostname
+# systemctl enable dhcpcd@interface_name.service
+# nano /etc/pacman.conf
+[multilib]
+SigLevel = PackageRequired
+Include = /etc/pacman.d/mirrorlist
+#pacman -Sy
+# passwd
+# pacman -S grub
+# grub-install --recheck /dev/sda
+# grub-mkconfig -o /boot/grub/grub.cfg
+# exit
+# umount /mnt/home
+# umount /mnt/
+# reboot
+
+
+
+
+root login
+# useradd -m -g users -G wheel -s /bin/bash [username]
+# passwd [username]
+#pacman -S sudo
+#nano /etc/sudoers
+%wheel ALL=(ALL) ALL comment out
+# pacman -S xorg-server xorg-server-utils xorg-xinit　mesa
+# pacman -S nvidia　lib32-nvidia-libgl
+# pacman -S xorg-twm xorg-xclock xterm
+# reboot
+
+
+$ sudo pacman -S slim arhlinux-themes-slim slim-themes
+$ sudo systemctl enable slim.service
+$ sudo pacman -S cinnamon cinnamon-control-center cinnamon-screensaver nemo
+$ nano ~/.xinitrc
+exec enlightenment_start
+$ chmod +x ~/.xinitrc
+# nano /etc/slim.conf
+# daemon yes
+# default_user simone　→user
+# auto_login no　→　yes
+↑uncomment
+current_theme archlinux-simplyblack
+# reboot
+
+
+archey3 archlinux  tarball 
+$ tar xfvz archey3.tar.gz
+$ cd archey3
+$ makepkg
+$ pacman -U archey3-*.pkg.tar.xz
+chrome iron
+
+
