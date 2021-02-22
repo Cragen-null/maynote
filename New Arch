@@ -1,0 +1,26 @@
+キーボードレイアウトの設定
+# loadkeys jp106
+
+作業記録の開始
+# script
+
+インターネット接続確認
+# ping -c 3 archlinux.jp
+
+インストールデバイスの確認
+# lsblk -p
+
+パーティションの作成
+# sgdisk -z /dev/sda
+# sgdisk -o /dev/sda
+# timeout 10 dd if=/dev/zero of=/dev/sda bs=4M
+# sgdisk -n 1:0:+512M -t 1:ef00 -c 1:"EFI System" /dev/sda
+# sgdisk -n 2:0:+512M -t 2:8300 -c 2:"Linux filesystem" /dev/sda
+# sgdisk -n 3:0: -t 3:8300 -c 3:"Linux filesystem" /dev/sda
+
+フォーマット
+# mkfs.vfat -F32 /dev/sda1
+# mkfs.ext4 /dev/sda2
+# mkfs.btrfs /dev/sda3　#xfs
+
+パーティションのマウント
