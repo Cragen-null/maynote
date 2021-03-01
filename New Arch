@@ -24,3 +24,68 @@
 # mkfs.btrfs /dev/sda3　#xfs
 
 パーティションのマウント
+# mount /dev/sda3 /mnt
+# mkdir /mnt/boot
+# mount /dev/sda2 /mnt/boot
+# mkdir /mnt/boot/efi
+# mount /dev/sda1 /mnt/boot/efi
+
+マウントの確認
+# mount | grep /mnt
+
+インストールミラーサーバーの選択
+# nano /etc/pacman.d/mirrorlist
+
+ベースパッケージのインストール
+# pacstrap /mnt base base-devel linux linux-firmware grub dosfstools efibootmgr netctl vim　btrfs-progs
+
+fstab生成
+# genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chrootの実行
+# arch-chroot /mnt
+# vim /etc/locale.gen
+en_US.UTF-8,ja_JP.UTF-8のコメントアウトを外す
+# locale-gen
+#echo LANG=en_US.UTF-8 > /etc/locale.conf
+#echo KEYMAP=jp106 > /etc/vconsole.conf
+
+タイムゾーン変更
+# ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+# hwclock --systohc --utc
+
+ホストネーム
+# echo archlinux > /etc/hostname
+# nano /etc/hosts
+
+...
+# Static table lookup for hostnames.
+# See hosts(5) for details.
+127.0.0.1       localhost
+::1             localhost
+127.0.1.1       archlinux.localdomain archlinux
+
+initramfs イメージの作成
+# mkinitcpio -p
+
+rootパスワードの設定
+passwd
+
+ブートローダーのインストール
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch --boot-directory=/boot/efi/EFI --recheck
+# grub-mkconfig -o /boot/efi/EFI/grub/grub.cfg
+
+arch-chrootの終了
+# exit
+
+作業記録の終了
+# exit
+
+作業記録ファイルのドライブへのコピー
+# cp typescript /mnt/root/arch_linux_install.log
+
+
+# umount -R /mnt
+# shutdown -h now
+
+
