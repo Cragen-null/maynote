@@ -92,8 +92,6 @@ pacman -S sudo
 EDITOR=vim visudo
 %wheel ALL=(ALL) ALL　コメントアウトを外す
 
-rootからログアウト
-一般ユーザーでログイン
 
 pacmanの色付け
 sudo vim /etc/pacman.conf
@@ -102,3 +100,16 @@ Color  ここのコメントアウトを外す
 ILoveCandy コメントの追加
 
 
+VMWare 環境上で動かしている場合
+# pacman -S open-vm-tools xf86-video-vmware
+# systemctl enable vmtoolsd
+# systemctl start vmtoolsd
+
+PCに搭載されているグラフィックカードを確認
+$ lspci | grep -e VGA -e 3D
+
+Xorgのインストール
+$ pacman -S mesa xorg-server xorg-apps xorg-xinput xorg-xinit xorg-twm xorg-xclock xterm
+
+rootからログアウト
+一般ユーザーでログイン
