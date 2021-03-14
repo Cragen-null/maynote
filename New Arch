@@ -9,7 +9,7 @@
 
 パーティションの作成
 # sgdisk -z /dev/sda
-# sgdisk -g /dev/sda
+# sgdisk -o /dev/sda
 # timeout 10 dd if=/dev/zero of=/dev/sda bs=4M
 # sgdisk -n 1:0:+512M -t 1:ef00 /dev/sda
 # sgdisk -n 2:0: -t 2:8300 /dev/sda
@@ -59,7 +59,7 @@ en_US.UTF-8,ja_JP.UTF-8のコメントアウトを外す
 127.0.1.1       "ユーザー名".localdomain "ユーザー名"
 
 initramfs イメージの作成
-# mkinitcpio -p
+# mkinitcpio -P
 
 rootパスワードの設定
 passwd
@@ -94,8 +94,13 @@ EDITOR=vim visudo
 
 
 pacmanの色付け
-sudo vim /etc/pacman.conf
-Color  ここのコメントアウトを外す
+vim /etc/pacman.conf
+
+# Misc options
+#UseSyslog
+Color // ここのコメントを外す
+#TotalDownload
+CheckSpace
 #VerbosePkgLists
 ILoveCandy コメントの追加
 
