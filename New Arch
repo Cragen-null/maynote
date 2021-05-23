@@ -1,6 +1,9 @@
 キーボードレイアウトの設定
 # loadkeys jp106
 
+BIOS設定の確認
+# ls -l /sys/firmware/efi/efivars
+
 インターネット接続確認
 # ping -c 3 archlinux.jp
 
@@ -69,6 +72,24 @@ passwd
 # grub-mkconfig -o /boot/grub/grub.cfg
 # mkdir /boot/EFI/boot
 # cp /boot/EFI/arch_grub/grubx64.efi  /boot/EFI/boot/bootx64.efi
+
+##ブートエントリ設定
+# blkid -o export /dev/sda2 | grep ^PARTUUID >> /boot/loader/entries/arch.conf
+# vim /boot/loader/entries/arch.conf
+   title Arch Linux
+   linux /vmlinuz-linux
+   initrd /initramfs-linux.img
+   options root=PARTUUID=【/dev/sda2のPARTUUID】 rw
+# pacman -S amd-ucode
+# vim /boot/loader/entries/arch.conf
+   title Arch
+   Linux linux
+   /vmlinuz-linux
+   initrd /amd-ucode.img
+   initrd /initramfs-linux.img
+   options root=PARTUUID=【/dev/sda2のPARTUUID】  rw
+   <例>options root="UUID=a51de28a-9ed9-4555-a3fd-0234eb3ffe4c7" rw
+
 
 arch-chrootの終了
 # exit
